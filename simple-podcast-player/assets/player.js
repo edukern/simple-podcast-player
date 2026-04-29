@@ -22,6 +22,8 @@
   }
 
   function initPlayer(container) {
+    if (container.dataset.sppInit) return;
+    container.dataset.sppInit = '1';
     var audio      = container.querySelector('.spp-audio');
     var playBtn    = container.querySelector('.spp-play-btn');
     var titleEl    = container.querySelector('.spp-title');
@@ -30,6 +32,10 @@
     var fill       = container.querySelector('.spp-fill');
     var speedBtn   = container.querySelector('.spp-speed');
     var speed      = 1;
+
+    if (!audio || !playBtn || !titleEl || !durationEl || !track || !fill || !speedBtn) {
+      return;
+    }
 
     // Show total duration once metadata loads
     audio.addEventListener('loadedmetadata', function () {
@@ -44,10 +50,17 @@
     // Play / pause toggle
     playBtn.addEventListener('click', function () {
       if (audio.paused) {
-        audio.play();
+        var playPromise = audio.play();
         container.classList.remove('is-paused');
         container.classList.add('is-playing');
         playBtn.setAttribute('aria-label', 'Pause');
+        if (playPromise !== undefined) {
+          playPromise.catch(function () {
+            container.classList.remove('is-playing');
+            container.classList.add('is-paused');
+            playBtn.setAttribute('aria-label', 'Play');
+          });
+        }
       } else {
         audio.pause();
         container.classList.remove('is-playing');
