@@ -37,14 +37,20 @@
       return;
     }
 
-    // Hover color via JS to beat theme specificity
+    // Apply button colors via JS to beat theme CSS specificity
     var style = getComputedStyle(container);
+    function accentColor() {
+      return style.getPropertyValue('--spp-accent').trim() || '#333333';
+    }
+    function hoverColor() {
+      return style.getPropertyValue('--spp-accent-hover').trim() || '#ffe641';
+    }
+    playBtn.style.backgroundColor = accentColor();
     playBtn.addEventListener('mouseenter', function () {
-      var hover = style.getPropertyValue('--spp-accent-hover').trim();
-      playBtn.style.backgroundColor = hover || '#ffe641';
+      playBtn.style.backgroundColor = hoverColor();
     });
     playBtn.addEventListener('mouseleave', function () {
-      playBtn.style.backgroundColor = '';
+      playBtn.style.backgroundColor = accentColor();
     });
 
     // Show total duration once metadata loads
