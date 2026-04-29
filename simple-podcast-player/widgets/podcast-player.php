@@ -36,7 +36,24 @@ class Podcast_Player extends Widget_Base {
     }
 
     protected function register_controls() {
-        // Controls added in Tasks 3 and 4
+        $this->start_controls_section( 'section_content', [
+            'label' => esc_html__( 'Content', 'simple-podcast-player' ),
+            'tab'   => Controls_Manager::TAB_CONTENT,
+        ] );
+
+        $this->add_control( 'audio_file', [
+            'label'      => esc_html__( 'Audio File', 'simple-podcast-player' ),
+            'type'       => Controls_Manager::MEDIA,
+            'media_type' => 'audio',
+        ] );
+
+        $this->add_control( 'episode_title', [
+            'label'       => esc_html__( 'Episode Title', 'simple-podcast-player' ),
+            'type'        => Controls_Manager::TEXT,
+            'placeholder' => esc_html__( 'Defaults to file name', 'simple-podcast-player' ),
+        ] );
+
+        $this->end_controls_section();
     }
 
     protected function render() {
