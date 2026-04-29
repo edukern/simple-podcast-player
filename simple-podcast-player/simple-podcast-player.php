@@ -12,6 +12,15 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+require_once __DIR__ . '/lib/plugin-update-checker/load-v5p6.php';
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+$sppUpdateChecker = PucFactory::buildUpdateChecker(
+    'https://github.com/edukern/simple-podcast-player',
+    __FILE__,
+    'simple-podcast-player'
+);
+$sppUpdateChecker->setBranch( 'master' );
+
 add_action( 'plugins_loaded', 'spp_init', 20 );
 
 function spp_init() {
@@ -21,7 +30,7 @@ function spp_init() {
     }
 
     add_action( 'elementor/widgets/register', 'spp_register_widgets' );
-    add_action( 'elementor/frontend/after_register_scripts', 'spp_register_assets' );
+    add_action( 'wp_enqueue_scripts', 'spp_enqueue_assets' );
 }
 
 function spp_missing_elementor_notice() {
@@ -36,14 +45,14 @@ function spp_register_widgets( $widgets_manager ) {
     $widgets_manager->register( new \Simple_Podcast_Player\Widget\Podcast_Player() );
 }
 
-function spp_register_assets() {
-    wp_register_style(
+function spp_enqueue_assets() {
+    wp_enqueue_style(
         'spp-player',
         plugins_url( 'assets/player.css', __FILE__ ),
         [],
         '1.0.0'
     );
-    wp_register_script(
+    wp_enqueue_script(
         'spp-player',
         plugins_url( 'assets/player.js', __FILE__ ),
         [],

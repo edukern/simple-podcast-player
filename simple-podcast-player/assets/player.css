@@ -34,11 +34,11 @@
     justify-content: center;
     padding: 0;
     color: #ffffff;
-    transition: opacity 0.15s;
+    transition: background-color 0.15s;
 }
 
 .spp-play-btn:hover {
-    opacity: 0.85;
+    background-color: var(--spp-accent-hover, var(--spp-accent, #333333)) !important;
 }
 
 .spp-icon-pause {

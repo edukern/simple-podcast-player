@@ -69,6 +69,15 @@ class Podcast_Player extends Widget_Base {
             ],
         ] );
 
+        $this->add_control( 'hover_color', [
+            'label'     => esc_html__( 'Button Hover Color', 'simple-podcast-player' ),
+            'type'      => Controls_Manager::COLOR,
+            'default'   => '#ffe641',
+            'selectors' => [
+                '{{WRAPPER}} .spp-player' => '--spp-accent-hover: {{VALUE}};',
+            ],
+        ] );
+
         $this->add_group_control( Group_Control_Typography::get_type(), [
             'name'     => 'title_typography',
             'selector' => '{{WRAPPER}} .spp-title',

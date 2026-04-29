@@ -37,6 +37,16 @@
       return;
     }
 
+    // Hover color via JS to beat theme specificity
+    var style = getComputedStyle(container);
+    playBtn.addEventListener('mouseenter', function () {
+      var hover = style.getPropertyValue('--spp-accent-hover').trim();
+      playBtn.style.backgroundColor = hover || '#ffe641';
+    });
+    playBtn.addEventListener('mouseleave', function () {
+      playBtn.style.backgroundColor = '';
+    });
+
     // Show total duration once metadata loads
     audio.addEventListener('loadedmetadata', function () {
       durationEl.textContent = formatTime(audio.duration);
