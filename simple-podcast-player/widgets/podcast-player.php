@@ -98,6 +98,59 @@ class Podcast_Player extends Widget_Base {
     }
 
     protected function render() {
-        // Render added in Task 5
+        $settings  = $this->get_settings_for_display();
+        $audio_url = ! empty( $settings['audio_file']['url'] ) ? $settings['audio_file']['url'] : '';
+
+        if ( empty( $audio_url ) ) {
+            if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
+                echo '<div style="padding:12px;background:#f0f0f0;color:#555;font-size:13px;border-radius:4px;">'
+                    . esc_html__( 'Podcast Player: select an audio file in the Content tab.', 'simple-podcast-player' )
+                    . '</div>';
+            }
+            return;
+        }
+
+        $title = ! empty( $settings['episode_title'] )
+            ? $settings['episode_title']
+            : pathinfo( $audio_url, PATHINFO_FILENAME );
+        ?>
+        <div class="spp-player">
+            <audio class="spp-audio" src="<?php echo esc_url( $audio_url ); ?>" preload="metadata"></audio>
+
+            <div class="spp-bar">
+                <svg class="spp-headphones" width="17" height="17" viewBox="0 0 24 24" fill="none"
+                     stroke="var(--spp-accent, #333)" stroke-width="2.2"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/>
+                    <path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+                </svg>
+
+                <button class="spp-play-btn" aria-label="<?php esc_attr_e( 'Play', 'simple-podcast-player' ); ?>">
+                    <svg class="spp-icon-play" width="12" height="12" viewBox="0 0 24 24"
+                         fill="currentColor" aria-hidden="true">
+                        <polygon points="5,3 19,12 5,21"/>
+                    </svg>
+                    <svg class="spp-icon-pause" width="10" height="10" viewBox="0 0 24 24"
+                         fill="currentColor" aria-hidden="true">
+                        <rect x="6" y="4" width="4" height="16"/>
+                        <rect x="14" y="4" width="4" height="16"/>
+                    </svg>
+                </button>
+
+                <span class="spp-title"><?php echo esc_html( $title ); ?></span>
+                <span class="spp-duration" aria-live="polite"></span>
+            </div>
+
+            <div class="spp-progress-row">
+                <div class="spp-track"
+                     role="progressbar"
+                     aria-label="<?php esc_attr_e( 'Playback progress', 'simple-podcast-player' ); ?>">
+                    <div class="spp-fill"></div>
+                </div>
+                <button class="spp-speed" aria-label="<?php esc_attr_e( 'Playback speed', 'simple-podcast-player' ); ?>">1×</button>
+            </div>
+        </div>
+        <?php
     }
 }
