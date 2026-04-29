@@ -2,7 +2,7 @@
   'use strict';
 
   function formatTime(seconds) {
-    if (isNaN(seconds) || seconds < 0) return '--:--';
+    if (!isFinite(seconds) || seconds < 0) return '--:--';
     var s = Math.floor(seconds);
     var h = Math.floor(s / 3600);
     var m = Math.floor((s % 3600) / 60);

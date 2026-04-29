@@ -9,6 +9,10 @@ describe('formatTime', () => {
     expect(formatTime(-1)).toBe('--:--');
   });
 
+  test('returns --:-- for Infinity', () => {
+    expect(formatTime(Infinity)).toBe('--:--');
+  });
+
   test('formats seconds under a minute', () => {
     expect(formatTime(5)).toBe('0:05');
   });
