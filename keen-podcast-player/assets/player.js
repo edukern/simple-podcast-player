@@ -53,6 +53,21 @@
       playBtn.style.backgroundColor = accentColor();
     });
 
+    // Speed button: override theme background; accent color when non-default speed
+    speedBtn.style.background = 'none';
+    speedBtn.style.color = '#999999';
+    speedBtn.style.borderRadius = '3px';
+    speedBtn.style.padding = '1px 4px';
+    function setSpeedStyle() {
+      if (speed === 1) {
+        speedBtn.style.background = 'none';
+        speedBtn.style.color = '#999999';
+      } else {
+        speedBtn.style.backgroundColor = accentColor();
+        speedBtn.style.color = '#ffffff';
+      }
+    }
+
     // Show total duration once metadata loads
     audio.addEventListener('loadedmetadata', function () {
       durationEl.textContent = formatTime(audio.duration);
@@ -107,6 +122,7 @@
       speed = cycleSpeed(speed);
       audio.playbackRate = speed;
       speedBtn.textContent = speed === 1 ? '1×' : speed + '×';
+      setSpeedStyle();
     });
 
     // Reset speed and state when episode ends
@@ -116,6 +132,7 @@
       speed = 1;
       audio.playbackRate = 1;
       speedBtn.textContent = '1×';
+      setSpeedStyle();
       playBtn.setAttribute('aria-label', 'Play');
     });
   }
