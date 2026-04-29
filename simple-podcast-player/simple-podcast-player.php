@@ -12,14 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once __DIR__ . '/lib/plugin-update-checker/load-v5p6.php';
-use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
-$sppUpdateChecker = PucFactory::buildUpdateChecker(
-    'https://github.com/edukern/simple-podcast-player',
-    __FILE__,
-    'simple-podcast-player'
-);
-$sppUpdateChecker->setBranch( 'master' );
+require_once __DIR__ . '/lib/github-updater.php';
+new SPP_GitHub_Updater( __FILE__, 'edukern/simple-podcast-player', '1.0.0' );
 
 add_action( 'plugins_loaded', 'spp_init', 20 );
 
