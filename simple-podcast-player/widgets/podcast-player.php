@@ -103,7 +103,7 @@ class Podcast_Player extends Widget_Base {
 
         if ( empty( $audio_url ) ) {
             if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-                echo '<div style="padding:12px;background:#f0f0f0;color:#555;font-size:13px;border-radius:4px;">'
+                echo '<div class="spp-editor-notice">'
                     . esc_html__( 'Podcast Player: select an audio file in the Content tab.', 'simple-podcast-player' )
                     . '</div>';
             }

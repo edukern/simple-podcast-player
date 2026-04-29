@@ -86,7 +86,7 @@
 
 .spp-player.is-playing .spp-progress-row,
 .spp-player.is-paused .spp-progress-row {
-    max-height: 20px;
+    max-height: 32px;
     margin-top: 8px;
 }
 
@@ -132,4 +132,20 @@
     color: #555555;
     font-size: 13px;
     border-radius: 4px;
+}
+
+/* ── Focus styles for keyboard navigation ── */
+.spp-play-btn:focus-visible {
+    outline: 2px solid var(--spp-accent, #333333);
+    outline-offset: 2px;
+}
+
+.spp-track:focus-visible {
+    outline: 2px solid var(--spp-accent, #333333);
+    outline-offset: 4px;
+}
+
+.spp-speed:focus-visible {
+    outline: 2px solid var(--spp-accent, #333333);
+    outline-offset: 2px;
 }
