@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Simple Podcast Player
  * Description: An Elementor widget for playing a single podcast episode from the WordPress media library.
- * Version:     1.0.2
- * Author:      Your Name
+ * Version:     1.0.3
+ * Author:      Keenfisher
  * License:     GPL-2.0-or-later
  * Text Domain: simple-podcast-player
  */
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/lib/github-updater.php';
-new SPP_GitHub_Updater( __FILE__, 'edukern/simple-podcast-player', '1.0.2' );
+new SPP_GitHub_Updater( __FILE__, 'edukern/simple-podcast-player', '1.0.3' );
 
 add_action( 'plugins_loaded', 'spp_init', 20 );
 
@@ -44,13 +44,13 @@ function spp_enqueue_assets() {
         'spp-player',
         plugins_url( 'assets/player.css', __FILE__ ),
         [],
-        '1.0.2'
+        '1.0.3'
     );
     wp_enqueue_script(
         'spp-player',
         plugins_url( 'assets/player.js', __FILE__ ),
         [],
-        '1.0.2',
+        '1.0.3',
         true
     );
     wp_localize_script( 'spp-player', 'sppData', [
