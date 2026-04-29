@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-add_action( 'plugins_loaded', 'spp_init' );
+add_action( 'plugins_loaded', 'spp_init', 20 );
 
 function spp_init() {
     if ( ! did_action( 'elementor/loaded' ) ) {
@@ -25,9 +25,10 @@ function spp_init() {
 }
 
 function spp_missing_elementor_notice() {
-    echo '<div class="notice notice-error"><p>'
-        . esc_html__( 'Simple Podcast Player requires Elementor to be installed and active.', 'simple-podcast-player' )
-        . '</p></div>';
+    printf(
+        '<div class="notice notice-error"><p>%s</p></div>',
+        esc_html__( 'Simple Podcast Player requires Elementor to be installed and active.', 'simple-podcast-player' )
+    );
 }
 
 function spp_register_widgets( $widgets_manager ) {
