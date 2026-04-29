@@ -16,6 +16,8 @@ class SPP_GitHub_Updater {
 
         add_filter( 'pre_set_site_transient_update_plugins', [ $this, 'check_update' ] );
         add_filter( 'plugins_api', [ $this, 'plugin_info' ], 10, 3 );
+        add_filter( 'plugin_action_links_' . $this->slug, [ $this, 'add_check_link' ] );
+        add_action( 'admin_init', [ $this, 'maybe_force_check' ] );
     }
 
     private function get_latest_release() {
@@ -71,10 +73,31 @@ class SPP_GitHub_Updater {
         if ( ! $release ) return $result;
 
         return (object) [
-            'name'          => 'Simple Podcast Player',
+            'name'          => 'Keen Podcast Player',
             'slug'          => dirname( $this->slug ),
             'version'       => ltrim( $release->tag_name, 'v' ),
             'download_link' => $release->zipball_url,
         ];
+    }
+
+    public function add_check_link( $links ) {
+        $url = wp_nonce_url(
+            add_query_arg( 'spp_force_check', '1', admin_url( 'plugins.php' ) ),
+            'spp_force_check'
+        );
+        $links[] = '<a href="' . esc_url( $url ) . '">Verificar Atualizações</a>';
+        return $links;
+    }
+
+    public function maybe_force_check() {
+        if ( ! isset( $_GET['spp_force_check'] ) ) return;
+        if ( ! check_admin_referer( 'spp_force_check' ) ) return;
+        if ( ! current_user_can( 'update_plugins' ) ) return;
+
+        delete_transient( 'spp_github_release' );
+        delete_site_transient( 'update_plugins' );
+
+        wp_safe_redirect( admin_url( 'plugins.php' ) );
+        exit;
     }
 }
