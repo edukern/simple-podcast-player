@@ -42,12 +42,21 @@ class SPP_GitHub_Updater {
 
         $latest = ltrim( $release->tag_name, 'v' );
         if ( version_compare( $latest, $this->version, '>' ) ) {
+            $package = $release->zipball_url;
+            if ( ! empty( $release->assets ) ) {
+                foreach ( $release->assets as $asset ) {
+                    if ( substr( $asset->name, -4 ) === '.zip' ) {
+                        $package = $asset->browser_download_url;
+                        break;
+                    }
+                }
+            }
             $transient->response[ $this->slug ] = (object) [
                 'slug'        => dirname( $this->slug ),
                 'plugin'      => $this->slug,
                 'new_version' => $latest,
                 'url'         => $release->html_url,
-                'package'     => $release->zipball_url,
+                'package'     => $package,
             ];
         }
 
