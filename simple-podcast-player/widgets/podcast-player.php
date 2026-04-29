@@ -145,7 +145,11 @@ class Podcast_Player extends Widget_Base {
             <div class="spp-progress-row">
                 <div class="spp-track"
                      role="progressbar"
-                     aria-label="<?php esc_attr_e( 'Playback progress', 'simple-podcast-player' ); ?>">
+                     aria-label="<?php esc_attr_e( 'Playback progress', 'simple-podcast-player' ); ?>"
+                     aria-valuemin="0"
+                     aria-valuemax="100"
+                     aria-valuenow="0"
+                     tabindex="0">
                     <div class="spp-fill"></div>
                 </div>
                 <button class="spp-speed" aria-label="<?php esc_attr_e( 'Playback speed', 'simple-podcast-player' ); ?>">1×</button>
